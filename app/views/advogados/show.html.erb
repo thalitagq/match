@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nome:</strong>
+  <%= @advogado.nome %>
+</p>
+
+<p>
+  <strong>Estado:</strong>
+  <%= @advogado.estado %>
+</p>
+
+<%= link_to 'Edit', edit_advogado_path(@advogado) %> |
+<%= link_to 'Back', advogados_path %>

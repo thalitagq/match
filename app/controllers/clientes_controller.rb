@@ -25,16 +25,23 @@ class ClientesController < ApplicationController
   # POST /clientes.json
   def create
     @cliente = Cliente.new(cliente_params)
-
+    puts 1
+    @cliente.advogado_id = self.buscar()
+    puts 2
+    
     respond_to do |format|
       if @cliente.save
+        puts 3
         format.html { redirect_to @cliente, notice: 'Cliente was successfully created.' }
         format.json { render :show, status: :created, location: @cliente }
       else
+        puts 4
         format.html { render :new }
         format.json { render json: @cliente.errors, status: :unprocessable_entity }
       end
+      puts 5
     end
+    puts 6
   end
 
   # PATCH/PUT /clientes/1
@@ -59,6 +66,11 @@ class ClientesController < ApplicationController
       format.html { redirect_to clientes_url, notice: 'Cliente was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def buscar()
+    advogado = Advogado.find_by_sql("SELECT * FROM advogados WHERE advogados.id = 1")
+    return advogado
   end
 
   private

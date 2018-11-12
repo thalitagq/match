@@ -25,7 +25,7 @@ class AdvogadosController < ApplicationController
   # POST /advogados.json
   def create
     @advogado = Advogado.new(advogado_params)
-
+    @advogado.qnt_clientes = 0
     respond_to do |format|
       if @advogado.save
         format.html { redirect_to @advogado, notice: 'Advogado was successfully created.' }
@@ -69,6 +69,6 @@ class AdvogadosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def advogado_params
-      params.require(:advogado).permit(:nome, :estado)
+      params.require(:advogado).permit(:nome, :estado, :qnt_clientes)
     end
 end

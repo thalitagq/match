@@ -17,7 +17,7 @@
       <tr>
         <td><%= cliente.nome %></td>
         <td><%= cliente.estado %></td>
-        <td><%= cliente.advogado %></td>
+        <td><%= cliente.advogado.nome %></td>
         <td><%= link_to 'Show', cliente %></td>
         <td><%= link_to 'Edit', edit_cliente_path(cliente) %></td>
         <td><%= link_to 'Destroy', cliente, method: :delete, data: { confirm: 'Are you sure?' } %></td>

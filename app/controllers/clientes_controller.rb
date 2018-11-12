@@ -25,9 +25,8 @@ end
 # POST /clientes.json
 def create
     @cliente = Cliente.new(cliente_params)
-    @cliente.advogado_id = self.buscar(@cliente.estado)
-    puts "aqui:"
-    puts @cliente.advogado_id
+    @cliente.advogado_id = Cliente.buscar(@cliente.estado)
+    Advogado.atualizar_mais(@cliente.advogado_id)
     respond_to do |format|
     if @cliente.save
      
@@ -59,28 +58,10 @@ end
 # DELETE /clientes/1.json
 def destroy
     @cliente.destroy
+    Advogado.atualizar_menos(@cliente.advogado_id)
     respond_to do |format|
     format.html { redirect_to clientes_url, notice: 'Cliente was successfully destroyed.' }
     format.json { head :no_content }
-    end
-end
-
-
-def buscar(estado_cliente)
-    #qnt = Advogado.find_by_sql("SELECT MIN(qnt_clientes) FROM advogados WHERE(advogados.estado = '#{estado_cliente}')")
-    qnt = Advogado.where(estado: estado_cliente).minimum("qnt_clientes")
-    puts estado_cliente
-    puts qnt
-    if qnt == nil
-        advogado =  Advogado.find_by_sql("SELECT * FROM advogados WHERE (advogados.estado = '#{estado_cliente}') LIMIT 1").pluck(:id)
-        advogado_id = advogado[0]
-        puts advogado_id
-        return advogado_id
-    else
-        advogado_id = Advogado.find_by_sql("SELECT MIN(qnt_clientes) FROM advogados WHERE (advogados.estado = '#{estado_cliente}') LIMIT 1").pluck(:id)
-        advogado_id = advogado[0]
-        puts advogado_id
-        return advogado_id
     end
 end
 
